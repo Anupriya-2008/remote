@@ -38,7 +38,7 @@
         console.log("Sending message:", message); // Debugging
         targetDeviceWindow.postMessage(
           { command: "message", content: message },
-          "https://anupriya-2008.github.io/remote/" // Replace with your server IP
+          "https://anupriya-2008.github.io/remote/target-device.html" // Replace with your server IP
         );
       } else {
         console.error("Target device window is not available.");
