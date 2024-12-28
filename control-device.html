@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control Device</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    button, input {
+      padding: 10px 20px;
+      font-size: 18px;
+      margin: 10px;
+    }
+    input {
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Control Device</h1>
+  <input id="messageInput" type="text" placeholder="Type a message here..." />
+  <button id="sendButton">Send Message</button>
+
+  <script>
+    // Open the Target Device page
+    const targetDeviceUrl = "http://192.168.216.223:8000/target-device.html"; // Replace with your server IP
+    const targetDeviceWindow = window.open(targetDeviceUrl);
+
+    // Send the message to the Target Device
+    document.getElementById("sendButton").addEventListener("click", function () {
+      const message = document.getElementById("messageInput").value;
+
+      if (targetDeviceWindow) {
+        console.log("Sending message:", message); // Debugging
+        targetDeviceWindow.postMessage(
+          { command: "message", content: message },
+          "http://192.168.216.223:8000" // Replace with your server IP
+        );
+      } else {
+        console.error("Target device window is not available.");
+        alert("Could not connect to the target device.");
+      }
+    });
+  </script>
+</body>
+</html>

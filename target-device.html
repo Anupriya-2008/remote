@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Target Device</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    .screen {
+      width: 80%;
+      height: 300px;
+      background-color: lightgray;
+      margin: 20px auto;
+      border: 2px solid #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: darkblue;
+    }
+    #output {
+      font-size: 20px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h1>Target Device</h1>
+  <div class="screen" id="screen">
+    <p id="output">Waiting for input...</p>
+  </div>
+
+  <script>
+    // Listen for incoming messages
+    window.addEventListener("message", function (event) {
+      console.log("Message received:", event); // Debugging
+
+      // Validate the origin of the message
+      if (event.origin !== "http://192.168.216.223:8000") { // Replace with your server IP
+        console.error("Invalid origin:", event.origin);
+        return;
+      }
+
+      // Handle the received message
+      const data = event.data;
+      if (data.command === "message") {
+        const message = data.content || "No content received.";
+        console.log("Message content:", message); // Debugging
+        document.getElementById("output").innerText = message;
+      } else {
+        console.error("Unknown command:", data.command);
+      }
+    });
+  </script>
+</body>
+</html>
